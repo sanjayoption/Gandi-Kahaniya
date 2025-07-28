@@ -373,56 +373,24 @@
         const BLOG_CONFIG = {
             blogFolder: 'blog',
             postsPerPage: 10,
-            baseUrl: 'https://sanjayoption.github.io/Gandi-Kahaniya/', // Update this!
+            baseUrl: 'https://sanjayoption.github.io/Gandi-Kahaniya/',
             siteTitle: 'Your Blog',
             siteDescription: 'A modern, minimal blog with cutting-edge insights and thoughts'
         };
         
-        // Blog posts will be automatically discovered
-        let blogPosts = [];
-        
-        // Function to parse markdown-like content
-        function parseMarkdown(content) {
-            // Basic markdown parsing
-            content = content.replace(/^# (.+)$/gm, '<h1>$1</h1>');
-            content = content.replace(/^## (.+)$/gm, '<h2>$1</h2>');
-            content = content.replace(/^### (.+)$/gm, '<h3>$1</h3>');
-            content = content.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-            content = content.replace(/\*(.+?)\*/g, '<em>$1</em>');
-            content = content.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>');
-            content = content.replace(/\n\n/g, '</p><p>');
-            content = '<p>' + content + '</p>';
-            return content;
-        }
-        
-        // Function to extract metadata from content
-        function extractMetadata(content) {
-            const lines = content.split('\n');
-            const metadata = {};
-            let contentStart = 0;
-            
-            if (lines[0] === '---') {
-                for (let i = 1; i < lines.length; i++) {
-                    if (lines[i] === '---') {
-                        contentStart = i + 1;
-                        break;
-                    }
-                    const [key, ...valueParts] = lines[i].split(':');
-                    if (key && valueParts.length) {
-                        metadata[key.trim()] = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
-                    }
-                }
+        // Blog posts manifest - Update this when you add new posts
+        const BLOG_POSTS = [
+            {
+                filename: 'my-first-post.html',
+                title: 'Welcome to My Ultra-Modern Blog',
+                date: '2025-07-28',
+                author: 'Your Name',
+                excerpt: 'This is my first blog post showcasing the ultra-lightweight, SEO-optimized blog system. Learn about modern web development and clean design principles.',
+                tags: ['welcome', 'blog', 'web development', 'SEO'],
+                readingTime: '4 min read'
             }
-            
-            const actualContent = lines.slice(contentStart).join('\n');
-            return { metadata, content: actualContent };
-        }
-        
-        // Function to create excerpt
-        function createExcerpt(content, length = 150) {
-            const text = content.replace(/<[^>]*>/g, '').trim();
-            return text.length > length ? text.substring(0, length) + '...' : text;
-        }
+            // Add more posts here as you create them
+        ];
         
         // Function to format date
         function formatDate(dateString) {
@@ -435,55 +403,6 @@
             });
         }
         
-        // Function to calculate reading time
-        function calculateReadingTime(content) {
-            const words = content.split(' ').length;
-            const readingTime = Math.ceil(words / 200); // Average reading speed
-            return `${readingTime} min read`;
-        }
-        
-        // Function to discover blog posts
-        async function discoverBlogPosts() {
-            // In a real GitHub Pages setup, you would maintain a manifest file
-            // For now, we'll simulate with a predefined list that you can update
-            const postManifest = [
-                'my-first-post.md',
-                
-    
-            ];
-            
-            const posts = [];
-            
-            for (const filename of postManifest) {
-                try {
-                    const response = await fetch(`${BLOG_CONFIG.blogFolder}/${filename}`);
-                    if (response.ok) {
-                        const content = await response.text();
-                        const { metadata, content: actualContent } = extractMetadata(content);
-                        
-                        const post = {
-                            filename,
-                            title: metadata.title || filename.replace(/\.(md|html)$/, '').replace(/-/g, ' '),
-                            date: metadata.date || new Date().toISOString().split('T')[0],
-                            author: metadata.author || 'Your Name',
-                            excerpt: metadata.excerpt || createExcerpt(actualContent),
-                            content: filename.endsWith('.md') ? parseMarkdown(actualContent) : actualContent,
-                            tags: metadata.tags ? metadata.tags.split(',').map(tag => tag.trim()) : [],
-                            readingTime: calculateReadingTime(actualContent),
-                            url: `${BLOG_CONFIG.baseUrl}/${BLOG_CONFIG.blogFolder}/${filename}`
-                        };
-                        
-                        posts.push(post);
-                    }
-                } catch (error) {
-                    console.log(`Could not load ${filename}:`, error);
-                }
-            }
-            
-            // Sort posts by date (newest first)
-            return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-        }
-        
         // Function to render blog posts
         function renderBlogPosts(posts) {
             const container = document.getElementById('blog-container');
@@ -494,11 +413,14 @@
                     <div class="blog-card" style="grid-column: 1 / -1; text-align: center;">
                         <h2>Welcome to Your Blog!</h2>
                         <p>No blog posts found yet. Add your first post to the <code>blog/</code> folder to get started.</p>
-                        <p style="margin-top: 20px;">Create a file like <code>blog/my-first-post.md</code> and it will automatically appear here!</p>
+                        <p style="margin-top: 20px;">Create a file like <code>blog/my-first-post.html</code> and it will automatically appear here!</p>
                     </div>
                 `;
             } else {
-                container.innerHTML = posts.map(post => `
+                // Sort posts by date (newest first)
+                const sortedPosts = posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                container.innerHTML = sortedPosts.map(post => `
                     <article class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
                         <div class="blog-meta">
                             <time datetime="${post.date}" itemprop="datePublished">${formatDate(post.date)}</time>
@@ -509,10 +431,11 @@
                         </div>
                         <h2 class="blog-title" itemprop="headline">${post.title}</h2>
                         <p class="blog-excerpt" itemprop="description">${post.excerpt}</p>
-                        <a href="${post.url}" class="read-more" itemprop="url">
+                        <a href="${BLOG_CONFIG.blogFolder}/${post.filename}" class="read-more" itemprop="url">
                             Read More →
                         </a>
                         <meta itemprop="dateModified" content="${post.date}">
+                        <meta itemprop="url" content="${BLOG_CONFIG.baseUrl}${BLOG_CONFIG.blogFolder}/${post.filename}">
                     </article>
                 `).join('');
             }
@@ -553,7 +476,8 @@
                             "name": post.author
                         },
                         "datePublished": post.date,
-                        "url": post.url
+                        "url": `${BLOG_CONFIG.baseUrl}${BLOG_CONFIG.blogFolder}/${post.filename}`,
+                        "keywords": post.tags.join(', ')
                     }))
                 };
                 
@@ -569,14 +493,14 @@
             const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>${BLOG_CONFIG.baseUrl}/</loc>
+        <loc>${BLOG_CONFIG.baseUrl}</loc>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
         <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     </url>
-    ${blogPosts.map(post => `
+    ${BLOG_POSTS.map(post => `
     <url>
-        <loc>${post.url}</loc>
+        <loc>${BLOG_CONFIG.baseUrl}${BLOG_CONFIG.blogFolder}/${post.filename}</loc>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
         <lastmod>${post.date}</lastmod>
@@ -588,14 +512,13 @@
         }
         
         // Initialize the blog
-        async function initBlog() {
+        function initBlog() {
             try {
-                blogPosts = await discoverBlogPosts();
-                renderBlogPosts(blogPosts);
-                updateSEO(blogPosts);
+                renderBlogPosts(BLOG_POSTS);
+                updateSEO(BLOG_POSTS);
                 
                 // Generate sitemap for development
-                if (blogPosts.length > 0) {
+                if (BLOG_POSTS.length > 0) {
                     generateSitemap();
                 }
             } catch (error) {
