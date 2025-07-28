@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A modern, minimal blog with cutting-edge insights and thoughts. Discover the latest articles and updates.">
+    <meta name="keywords" content="blog, technology, insights, articles, modern, minimal">
+    <meta name="author" content="Your Name">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourusername.github.io/">
+    <meta property="og:title" content="Your Blog - Modern Insights & Articles">
+    <meta property="og:description" content="A modern, minimal blog with cutting-edge insights and thoughts. Discover the latest articles and updates.">
+    <meta property="og:image" content="https://yourusername.github.io/logo.png">
+    <meta property="og:site_name" content="Your Blog">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourusername.github.io/">
+    <meta property="twitter:title" content="Your Blog - Modern Insights & Articles">
+    <meta property="twitter:description" content="A modern, minimal blog with cutting-edge insights and thoughts. Discover the latest articles and updates.">
+    <meta property="twitter:image" content="https://yourusername.github.io/logo.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourusername.github.io/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <title>Your Blog - Modern Insights & Articles</title>
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "Your Blog",
+        "description": "A modern, minimal blog with cutting-edge insights and thoughts",
+        "url": "https://yourusername.github.io/",
+        "image": "https://yourusername.github.io/logo.png",
+        "author": {
+            "@type": "Person",
+            "name": "Your Name"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Your Blog",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://yourusername.github.io/logo.png"
+            }
+        }
+    }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-gradient: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --accent: #3498db;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.15);
+            --border-radius: 16px;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            background: var(--primary-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        
+        /* Animated background elements */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .floating-shape {
+            position: absolute;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        
+        .floating-shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating-shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: -7s;
+        }
+        
+        .floating-shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 70%;
+            animation-delay: -14s;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-100px) rotate(180deg); opacity: 1; }
+            100% { transform: translateY(0px) rotate(360deg); opacity: 0.7; }
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            background: white;
+            padding: 10px;
+        }
+        
+        .logo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .blog-card {
+            background: var(--card-gradient);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.8);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .blog-card:hover::before {
+            left: 100%;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .blog-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .blog-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+        
+        .blog-excerpt {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .read-more {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: gap 0.3s ease;
+        }
+        
+        .read-more:hover {
+            gap: 10px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(52, 152, 219, 0.3);
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 80px;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+            border-top: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .blog-card {
+                padding: 20px;
+            }
+        }
+        
+        /* SEO Enhancement: Ensure good contrast */
+        @media (prefers-contrast: high) {
+            :root {
+                --text-primary: #000;
+                --text-secondary: #333;
+            }
+        }
+        
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+    </div>
+    
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <img src="logo.png" alt="Blog Logo" loading="eager">
+            </div>
+            <h1>Your Blog</h1>
+            <p class="subtitle">Modern insights, minimal design, maximum impact. Discover thoughts and ideas that matter.</p>
+        </header>
+        
+        <main>
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Loading latest articles...</p>
+            </div>
+            
+            <div id="blog-container" class="blog-grid" style="display: none;"></div>
+        </main>
+        
+        <footer class="footer">
+            <p>&copy; 2025 Your Blog. All rights reserved. Built with ❤️ and modern web standards.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Blog configuration
+        const BLOG_CONFIG = {
+            blogFolder: 'blog',
+            postsPerPage: 10,
+            baseUrl: 'https://yourusername.github.io', // Update this!
+            siteTitle: 'Your Blog',
+            siteDescription: 'A modern, minimal blog with cutting-edge insights and thoughts'
+        };
+        
+        // Blog posts will be automatically discovered
+        let blogPosts = [];
+        
+        // Function to parse markdown-like content
+        function parseMarkdown(content) {
+            // Basic markdown parsing
+            content = content.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+            content = content.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+            content = content.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+            content = content.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            content = content.replace(/\*(.+?)\*/g, '<em>$1</em>');
+            content = content.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>');
+            content = content.replace(/\n\n/g, '</p><p>');
+            content = '<p>' + content + '</p>';
+            return content;
+        }
+        
+        // Function to extract metadata from content
+        function extractMetadata(content) {
+            const lines = content.split('\n');
+            const metadata = {};
+            let contentStart = 0;
+            
+            if (lines[0] === '---') {
+                for (let i = 1; i < lines.length; i++) {
+                    if (lines[i] === '---') {
+                        contentStart = i + 1;
+                        break;
+                    }
+                    const [key, ...valueParts] = lines[i].split(':');
+                    if (key && valueParts.length) {
+                        metadata[key.trim()] = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
+                    }
+                }
+            }
+            
+            const actualContent = lines.slice(contentStart).join('\n');
+            return { metadata, content: actualContent };
+        }
+        
+        // Function to create excerpt
+        function createExcerpt(content, length = 150) {
+            const text = content.replace(/<[^>]*>/g, '').trim();
+            return text.length > length ? text.substring(0, length) + '...' : text;
+        }
+        
+        // Function to format date
+        function formatDate(dateString) {
+            if (!dateString) return new Date().toLocaleDateString();
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+        
+        // Function to calculate reading time
+        function calculateReadingTime(content) {
+            const words = content.split(' ').length;
+            const readingTime = Math.ceil(words / 200); // Average reading speed
+            return `${readingTime} min read`;
+        }
+        
+        // Function to discover blog posts
+        async function discoverBlogPosts() {
+            // In a real GitHub Pages setup, you would maintain a manifest file
+            // For now, we'll simulate with a predefined list that you can update
+            const postManifest = [
+                'my-first-blog-post.md',
+                'welcome-to-my-blog.html',
+                // Add your blog post filenames here
+            ];
+            
+            const posts = [];
+            
+            for (const filename of postManifest) {
+                try {
+                    const response = await fetch(`${BLOG_CONFIG.blogFolder}/${filename}`);
+                    if (response.ok) {
+                        const content = await response.text();
+                        const { metadata, content: actualContent } = extractMetadata(content);
+                        
+                        const post = {
+                            filename,
+                            title: metadata.title || filename.replace(/\.(md|html)$/, '').replace(/-/g, ' '),
+                            date: metadata.date || new Date().toISOString().split('T')[0],
+                            author: metadata.author || 'Your Name',
+                            excerpt: metadata.excerpt || createExcerpt(actualContent),
+                            content: filename.endsWith('.md') ? parseMarkdown(actualContent) : actualContent,
+                            tags: metadata.tags ? metadata.tags.split(',').map(tag => tag.trim()) : [],
+                            readingTime: calculateReadingTime(actualContent),
+                            url: `${BLOG_CONFIG.baseUrl}/${BLOG_CONFIG.blogFolder}/${filename}`
+                        };
+                        
+                        posts.push(post);
+                    }
+                } catch (error) {
+                    console.log(`Could not load ${filename}:`, error);
+                }
+            }
+            
+            // Sort posts by date (newest first)
+            return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
+        
+        // Function to render blog posts
+        function renderBlogPosts(posts) {
+            const container = document.getElementById('blog-container');
+            const loading = document.getElementById('loading');
+            
+            if (posts.length === 0) {
+                container.innerHTML = `
+                    <div class="blog-card" style="grid-column: 1 / -1; text-align: center;">
+                        <h2>Welcome to Your Blog!</h2>
+                        <p>No blog posts found yet. Add your first post to the <code>blog/</code> folder to get started.</p>
+                        <p style="margin-top: 20px;">Create a file like <code>blog/my-first-post.md</code> and it will automatically appear here!</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = posts.map(post => `
+                    <article class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
+                        <div class="blog-meta">
+                            <time datetime="${post.date}" itemprop="datePublished">${formatDate(post.date)}</time>
+                            <span>•</span>
+                            <span>${post.readingTime}</span>
+                            <span>•</span>
+                            <span itemprop="author">${post.author}</span>
+                        </div>
+                        <h2 class="blog-title" itemprop="headline">${post.title}</h2>
+                        <p class="blog-excerpt" itemprop="description">${post.excerpt}</p>
+                        <a href="${post.url}" class="read-more" itemprop="url">
+                            Read More →
+                        </a>
+                        <meta itemprop="dateModified" content="${post.date}">
+                    </article>
+                `).join('');
+            }
+            
+            loading.style.display = 'none';
+            container.style.display = 'grid';
+            
+            // Add animation delay to cards
+            const cards = document.querySelectorAll('.blog-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        }
+        
+        // Function to generate and update SEO
+        function updateSEO(posts) {
+            // Update meta description with latest post titles
+            if (posts.length > 0) {
+                const latestTitles = posts.slice(0, 3).map(post => post.title).join(', ');
+                const metaDesc = document.querySelector('meta[name="description"]');
+                metaDesc.content = `Latest articles: ${latestTitles}. ${BLOG_CONFIG.siteDescription}`;
+            }
+            
+            // Update JSON-LD with blog posts
+            if (posts.length > 0) {
+                const blogPostsLD = {
+                    "@context": "https://schema.org",
+                    "@type": "Blog",
+                    "name": BLOG_CONFIG.siteTitle,
+                    "description": BLOG_CONFIG.siteDescription,
+                    "url": BLOG_CONFIG.baseUrl,
+                    "blogPost": posts.map(post => ({
+                        "@type": "BlogPosting",
+                        "headline": post.title,
+                        "description": post.excerpt,
+                        "author": {
+                            "@type": "Person",
+                            "name": post.author
+                        },
+                        "datePublished": post.date,
+                        "url": post.url
+                    }))
+                };
+                
+                const script = document.createElement('script');
+                script.type = 'application/ld+json';
+                script.textContent = JSON.stringify(blogPostsLD);
+                document.head.appendChild(script);
+            }
+        }
+        
+        // Function to generate sitemap (call this manually or via build process)
+        function generateSitemap() {
+            const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>${BLOG_CONFIG.baseUrl}/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    </url>
+    ${blogPosts.map(post => `
+    <url>
+        <loc>${post.url}</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <lastmod>${post.date}</lastmod>
+    </url>`).join('')}
+</urlset>`;
+            
+            console.log('Sitemap (save as sitemap.xml):', sitemap);
+            return sitemap;
+        }
+        
+        // Initialize the blog
+        async function initBlog() {
+            try {
+                blogPosts = await discoverBlogPosts();
+                renderBlogPosts(blogPosts);
+                updateSEO(blogPosts);
+                
+                // Generate sitemap for development
+                if (blogPosts.length > 0) {
+                    generateSitemap();
+                }
+            } catch (error) {
+                console.error('Error initializing blog:', error);
+                document.getElementById('loading').innerHTML = `
+                    <p>Error loading blog posts. Please check your setup.</p>
+                `;
+            }
+        }
+        
+        // Load blog on page load
+        document.addEventListener('DOMContentLoaded', initBlog);
+        
+        // Service Worker for PWA capabilities and SEO
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => console.log('SW registered'))
+                    .catch(registrationError => console.log('SW registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>
